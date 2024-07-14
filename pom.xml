@@ -12,7 +12,7 @@
 	<artifactId>projetSg-Ng</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>projetSg-Ng</name>
-	<description>theme cuisine</description>
+	<description>projet stage Medianet</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -73,6 +73,12 @@
 			<scope>runtime</scope>
 		</dependency>
 		<!-- end jwt dependencies -->
+		<!-- postgresql -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- api documentation -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
@@ -116,6 +122,10 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 		</dependency>
 	</dependencies>
 
