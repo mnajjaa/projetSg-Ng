@@ -1,0 +1,34 @@
+services:
+  postgres:
+    container_name: postgres-sql-medianet
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: medianet_recrute
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - spring-boot-medianet
+    restart: unless-stopped
+  mail-dev:
+    container_name: maildev-medianet
+    image: maildev/maildev
+    ports:
+      - "1080:80"
+      - "1025:25"
+
+
+networks:
+    spring-boot-medianet:
+      driver: bridge
+
+volumes:
+  postgres:
+    driver: local
+
+
+
