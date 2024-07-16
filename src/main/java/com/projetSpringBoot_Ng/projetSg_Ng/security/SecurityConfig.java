@@ -1,76 +1,55 @@
 package com.projetSpringBoot_Ng.projetSg_Ng.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-     private JwtAuthEntryPoint authEntryPoint;
-    private CustomUserDetailsService customUserDetailsService;
-    @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthEntryPoint authEntryPoint) {
-        this.customUserDetailsService = userDetailsService;
-        this.authEntryPoint = authEntryPoint;
-    }
+
+    private final JwtFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // You can enable it if needed
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(authEntryPoint))
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated())
-                .httpBasic(withDefaults());
-        http.addFilterBefore(jwtAuthentificationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .cors(withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(req ->
+                        req.requestMatchers(
+                                        "/auth/**",
+                                        "/v2/api-docs",
+                                        "/v3/api-docs",
+                                        "/v3/api-docs/**",
+                                        "/swagger-resources",
+                                        "/swagger-resources/**",
+                                        "/configuration/ui",
+                                        "/configuration/security",
+                                        "/swagger-ui/**",
+                                        "/webjars/**",
+                                        "/swagger-ui.html"
+                                )
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated()
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
-    }
-
-//    @Bean
-//    public UserDetailsService users() {
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password("password")
-//                .roles("ADMIN")
-//                .build();
-//
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("password")
-//                .roles("USER")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(admin, user);
-//    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public JWTAuthentificationFilter jwtAuthentificationFilter() {
-        return new JWTAuthentificationFilter();
     }
 }
