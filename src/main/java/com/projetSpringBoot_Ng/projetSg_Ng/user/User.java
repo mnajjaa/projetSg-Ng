@@ -65,7 +65,7 @@ public class User implements UserDetails, Principal {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
@@ -96,5 +96,6 @@ public class User implements UserDetails, Principal {
     public String getFullName() {
         return firstName + " " + lastName;
     }
+
 
 }

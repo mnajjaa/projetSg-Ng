@@ -55,25 +55,33 @@ public class AuthenticationService {
         sendValidationEmail(user);
     }
 
-//    public AuthenticationResponse authenticate(AuthenticationRequest request) {
-//        var auth = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        request.getEmail(),
-//                        request.getPassword()
-//                )
-//        );
-//
-//        var claims = new HashMap<String, Object>();
-//        var user = ((User) auth.getPrincipal());
-//        claims.put("fullName", user.getFullName());
-//
-//        var jwtToken = jwtService.generateToken(claims, (User) auth.getPrincipal());
-//        return AuthenticationResponse.builder()
-//                .token(jwtToken)
-//                .build();
-//    }
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        if (request.getPassword() == null || request.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be empty");
+        }
 
-    @Transactional
+        System.out.println("Authenticating user: " + request.getEmail() + " with password: " + request.getPassword());
+
+        var auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+        // Rest of the method remains unchanged
+
+        var claims = new HashMap<String, Object>();
+        var user = ((User) auth.getPrincipal());
+        claims.put("fullName", user.getFullName());
+
+        var jwtToken = jwtService.generateToken(claims, (User) auth.getPrincipal());
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
+    }
+
+//    @Transactional
     public void activateAccount(String token) throws MessagingException {
         Token savedToken = tokenRepository.findByToken(token)
                 // todo exception has to be defined
@@ -108,7 +116,7 @@ public class AuthenticationService {
 
     private void sendValidationEmail(User user) throws MessagingException {
         var newToken = generateAndSaveActivationToken(user);
-        // Send an email
+
         emailService.sendEmail(
                 user.getEmail(),
                 user.getFullName(),
