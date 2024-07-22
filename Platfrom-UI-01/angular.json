@@ -89,7 +89,18 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/bootstrap.js",
+              "src/assets/js/helpers.js",
+              "src/assets/js/menu.js",
+              "src/assets/vendor/libs/apex-charts/apexcharts.js",
+              "src/assets/vendor/libs/highlight/highlight.js",
+              "src/assets/vendor/libs/jquery/jquery.js",
+              "src/assets/vendor/libs/masonry/masonry.js",
+              "src/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js",
+              "src/assets/vendor/libs/popper/popper.js"
+
+            ]
           }
         }
       }
