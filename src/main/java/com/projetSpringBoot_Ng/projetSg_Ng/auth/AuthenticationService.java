@@ -56,20 +56,12 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        if (request.getPassword() == null || request.getPassword().isEmpty()) {
-            throw new IllegalArgumentException("Password cannot be empty");
-        }
-
-        System.out.println("Authenticating user: " + request.getEmail() + " with password: " + request.getPassword());
-
         var auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
                 )
         );
-
-        // Rest of the method remains unchanged
 
         var claims = new HashMap<String, Object>();
         var user = ((User) auth.getPrincipal());
