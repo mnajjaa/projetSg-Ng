@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/services/authentication.service';
 
@@ -8,10 +8,18 @@ import { AuthenticationService } from '../../services/services/authentication.se
   styleUrls: ['./activate-account.component.css']
 })
 export class ActivateAccountComponent {
+
+  @ViewChild('digit1') digit1!: ElementRef;
+  @ViewChild('digit2') digit2!: ElementRef;
+  @ViewChild('digit3') digit3!: ElementRef;
+  @ViewChild('digit4') digit4!: ElementRef;
+  @ViewChild('digit5') digit5!: ElementRef;
+  @ViewChild('digit6') digit6!: ElementRef;
+
   message = '';
   isOkay = true;
   submitted = false;
-  otp = ['', '', '', '', '', ''];
+  otp = '';
 
   constructor(
     private router: Router,
@@ -27,24 +35,48 @@ export class ActivateAccountComponent {
         this.router.navigate(['login']);
       },
       error: () => {
-        this.message = 'Token has expired or is invalid';
+        this.message = 'Token has been expired or invalid';
         this.submitted = true;
         this.isOkay = false;
+        this.resetInputs();
       }
     });
   }
 
-  onCodeCompleted() {
-    const token = this.otp.join('');
+  onSubmit() {
+    const token = this.otp;
     this.confirmAccount(token);
   }
 
-  onSubmit() {
-    this.onCodeCompleted();
+  onInputChange(event: any, nextElementIndex: number) {
+    const input = event.target;
+    const value = input.value;
+    const nextElement = this[`digit${nextElementIndex + 1}` as keyof ActivateAccountComponent] as ElementRef;
+
+    if (value.length === 1) {
+      this.otp = this.getOtpValue();
+      if (nextElement) {
+        nextElement.nativeElement.focus();
+      }
+    }
+  }
+
+  getOtpValue(): string {
+    return `${this.digit1.nativeElement.value}${this.digit2.nativeElement.value}${this.digit3.nativeElement.value}${this.digit4.nativeElement.value}${this.digit5.nativeElement.value}${this.digit6.nativeElement.value}`;
+  }
+
+  resetInputs() {
+    this.digit1.nativeElement.value = '';
+    this.digit2.nativeElement.value = '';
+    this.digit3.nativeElement.value = '';
+    this.digit4.nativeElement.value = '';
+    this.digit5.nativeElement.value = '';
+    this.digit6.nativeElement.value = '';
+    this.otp = '';
+    this.digit1.nativeElement.focus();
   }
 
   resendCode() {
-    // Logic to resend the code
-    console.log('Resend code logic goes here');
+    // Resend code logic here
   }
 }

@@ -56,31 +56,24 @@
         <p class="mb-0 fw-medium">Type your 6 digit security code</p>
 
         <!-- Form -->
-        <form id="twoStepsForm" (ngSubmit)="onSubmit()" method="GET">
-          <div *ngIf="message && !isOkay" class="alert alert-danger">{{ message }}</div>
+        <form id="twoStepsForm" (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <div class="auth-input-wrapper d-flex align-items-center justify-content-sm-between numeral-mask-wrapper">
-              <!-- Input fields for OTP -->
-              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" autofocus [(ngModel)]="otp[0]" name="otp0">
-              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" [(ngModel)]="otp[1]" name="otp1">
-              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" [(ngModel)]="otp[2]" name="otp2">
-              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" [(ngModel)]="otp[3]" name="otp3">
-              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" [(ngModel)]="otp[4]" name="otp4">
-              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" [(ngModel)]="otp[5]" name="otp5">
+              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" #digit1 (input)="onInputChange($event, 1)" autofocus>
+              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" #digit2 (input)="onInputChange($event, 2)">
+              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" #digit3 (input)="onInputChange($event, 3)">
+              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" #digit4 (input)="onInputChange($event, 4)">
+              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" #digit5 (input)="onInputChange($event, 5)">
+              <input type="tel" class="form-control auth-input h-px-50 text-center numeral-mask mx-1 my-2" maxlength="1" #digit6 (input)="onInputChange($event, 6)">
             </div>
-            <!-- Create a hidden field which is combined by 6 fields above -->
-            <input type="hidden" name="otp" [value]="otp.join('')"/>
+            <input type="hidden" name="otp" [(ngModel)]="otp"/>
           </div>
-          <button type="submit" class="btn btn-primary d-grid w-100 mb-3">
-            Verify my account
-          </button>
+          <button type="submit" class="btn btn-primary d-grid w-100 mb-3">Verify my account</button>
           <div class="text-center">Didn't get the code?
-            <a href="javascript:void(0);" (click)="resendCode()">
-              Resend
-            </a>
+            <a href="javascript:void(0);" (click)="resendCode()">Resend</a>
           </div>
         </form>
-      </div>
+        <div *ngIf="!isOkay" class="alert alert-danger mt-3">{{message}}</div>
     </div>
     <!-- / Two Steps Verification -->
   </div>
@@ -88,3 +81,4 @@
 
 <!-- / Content -->
 
+</div>
