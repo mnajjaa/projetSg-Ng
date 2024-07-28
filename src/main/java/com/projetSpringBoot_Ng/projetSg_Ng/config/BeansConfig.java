@@ -43,11 +43,12 @@ public class BeansConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public AuditorAware<Integer> auditorAware() {
-//        return new ApplicationAuditAware();
-//    }
+    @Bean
+    public AuditorAware<Integer> auditorAware() {
+        return new ApplicationAuditAware();
+    }
 
+    //This filter is used to handle Cross-Origin  Resource Sharing (CORS) settings for the application.
     @Bean
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

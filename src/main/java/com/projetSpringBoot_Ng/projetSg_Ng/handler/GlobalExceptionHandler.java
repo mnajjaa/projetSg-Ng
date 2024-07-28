@@ -1,7 +1,8 @@
 package com.projetSpringBoot_Ng.projetSg_Ng.handler;
 
-//import com.projetSpringBoot_Ng.projetSg_Ng.exception.ActivationTokenException;
-//import com.projetSpringBoot_Ng.projetSg_Ng.exception.OperationNotPermittedException;
+
+import com.projetSpringBoot_Ng.projetSg_Ng.exception.ActivationTokenException;
+import com.projetSpringBoot_Ng.projetSg_Ng.exception.OperationNotPermittedException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -74,27 +75,27 @@ public class GlobalExceptionHandler {
                 );
     }
 
-//    @ExceptionHandler(ActivationTokenException.class)
-//    public ResponseEntity<ExceptionResponse> handleException(ActivationTokenException exp) {
-//        return ResponseEntity
-//                .status(BAD_REQUEST)
-//                .body(
-//                        ExceptionResponse.builder()
-//                                .error(exp.getMessage())
-//                                .build()
-//                );
-//    }
-//
-//    @ExceptionHandler(OperationNotPermittedException.class)
-//    public ResponseEntity<ExceptionResponse> handleException(OperationNotPermittedException exp) {
-//        return ResponseEntity
-//                .status(BAD_REQUEST)
-//                .body(
-//                        ExceptionResponse.builder()
-//                                .error(exp.getMessage())
-//                                .build()
-//                );
-//    }
+    @ExceptionHandler(ActivationTokenException.class)
+    public ResponseEntity<ExceptionResponse> handleException(ActivationTokenException exp) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(OperationNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handleException(OperationNotPermittedException exp) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exp) {
