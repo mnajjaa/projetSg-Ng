@@ -1,5 +1,7 @@
 package com.projetSpringBoot_Ng.projetSg_Ng.auth;
 
+import com.projetSpringBoot_Ng.projetSg_Ng.diplome.Diplome;
+import com.projetSpringBoot_Ng.projetSg_Ng.diplome.DiplomeRepository;
 import com.projetSpringBoot_Ng.projetSg_Ng.email.EmailService;
 import com.projetSpringBoot_Ng.projetSg_Ng.email.EmailTemplateName;
 import com.projetSpringBoot_Ng.projetSg_Ng.role.RoleRepository;
@@ -34,15 +36,18 @@ public class AuthenticationService {
     private final RoleRepository roleRepository;
     private final EmailService emailService;
     private final TokenRepository tokenRepository;
+    private final DiplomeRepository diplomeRepository;
+
 
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
 
     public void register(RegistrationRequest request) throws MessagingException {
-        var roleName = request.getRole();
+        var roleName = request.getRole(); // Assuming role comes from the request
         var role = roleRepository.findByName(roleName)
                 .orElseThrow(() -> new IllegalStateException("ROLE " + roleName + " was not initiated"));
 
+        // Build the user object
         var userBuilder = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
@@ -68,6 +73,18 @@ public class AuthenticationService {
 
         var user = userBuilder.build();
         userRepository.save(user);
+
+        // Save diplomas if present
+        if (request.getDiplomes() != null) {
+            request.getDiplomes().forEach(diplomeName -> {
+                var diplome = Diplome.builder()
+                        .diplome(diplomeName)
+                        .user(user)
+                        .build();
+                diplomeRepository.save(diplome);
+            });
+        }
+
         sendValidationEmail(user);
     }
 

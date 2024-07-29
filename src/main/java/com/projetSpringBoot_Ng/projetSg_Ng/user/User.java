@@ -1,5 +1,6 @@
 package com.projetSpringBoot_Ng.projetSg_Ng.user;
 
+import com.projetSpringBoot_Ng.projetSg_Ng.diplome.Diplome;
 import com.projetSpringBoot_Ng.projetSg_Ng.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
@@ -43,6 +45,9 @@ public class User implements UserDetails, Principal {
     private String ecole;
     private String note;
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Diplome> diplomes;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles;

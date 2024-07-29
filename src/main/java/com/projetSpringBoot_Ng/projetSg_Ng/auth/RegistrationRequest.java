@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 // @Builder is used to create an instance of the RegistrationRequest class
@@ -41,4 +43,5 @@ public class RegistrationRequest {
     private String ecole;
     @Nullable
     private String note;
-}
+    @Nullable
+    private List<String> diplomes;}
