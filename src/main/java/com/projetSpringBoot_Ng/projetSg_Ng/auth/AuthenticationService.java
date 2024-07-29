@@ -39,18 +39,34 @@ public class AuthenticationService {
     private String activationUrl;
 
     public void register(RegistrationRequest request) throws MessagingException {
-        var userRole = roleRepository.findByName("USER")
-                // todo - better exception handling
-                .orElseThrow(() -> new IllegalStateException("ROLE USER was not initiated"));
-        var user = User.builder()
+        var roleName = request.getRole();
+        var role = roleRepository.findByName(roleName)
+                .orElseThrow(() -> new IllegalStateException("ROLE " + roleName + " was not initiated"));
+
+        var userBuilder = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .accountLocked(false)
                 .enabled(false)
-                .roles(List.of(userRole))
-                .build();
+                .roles(List.of(role));
+
+        // Optional fields
+        if (request.getPoste() != null) {
+            userBuilder.poste(request.getPoste());
+        }
+        if (request.getAddresse() != null) {
+            userBuilder.addresse(request.getAddresse());
+        }
+        if (request.getEcole() != null) {
+            userBuilder.ecole(request.getEcole());
+        }
+        if (request.getNote() != null) {
+            userBuilder.note(request.getNote());
+        }
+
+        var user = userBuilder.build();
         userRepository.save(user);
         sendValidationEmail(user);
     }

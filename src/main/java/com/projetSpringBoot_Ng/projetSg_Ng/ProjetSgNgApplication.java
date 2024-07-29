@@ -24,6 +24,9 @@ public class ProjetSgNgApplication {
 				if (roleRepository.findByName("USER").isEmpty()) {
 					roleRepository.save(Role.builder().name("USER").build());
 				}
+				if (roleRepository.findByName("RECRUITER").isEmpty()) {
+					roleRepository.save(Role.builder().name("RECRUITER").build());
+				}
 			};
 		}
 
