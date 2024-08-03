@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public record OffreRequest(
-        Integer id,
+//        Integer id,
         @NotNull(message = "Le nom de l'offre est obligatoire")
         @NotEmpty(message = "Le nom de l'offre ne peut pas être vide")
         String nomOffre,

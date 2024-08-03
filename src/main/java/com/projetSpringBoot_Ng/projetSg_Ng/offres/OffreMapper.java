@@ -7,7 +7,6 @@ public class OffreMapper {
     public Offre toOffre(OffreRequest request) {
 
         return Offre.builder()
-                .id(request.id())
                 .nomOffre(request.nomOffre())
                 .description(request.description())
                 .build();

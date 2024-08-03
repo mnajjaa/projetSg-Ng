@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -42,9 +42,10 @@ public class Offre {
 
     @CreatedBy
     @Column(nullable = false, updatable = false)
-    private String createdBy;
-    @LastModifiedDate
+    private Integer createdBy;
+
+    @LastModifiedBy
     @Column(insertable = false)
-    private String lastUpdatedBy;
+    private Integer lastModifiedBy;
 
 }
