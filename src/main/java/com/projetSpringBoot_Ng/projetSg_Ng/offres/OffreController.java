@@ -21,6 +21,7 @@ public class OffreController {
     private final UserRepository userRepository;
 
 
+
     @PostMapping
     public ResponseEntity<Integer> createOffre(@Valid @RequestBody OffreRequest request, Authentication connectedUser) {
         System.out.println("createOffre endpoint hit");
@@ -30,6 +31,10 @@ public class OffreController {
     }
 
 
+    @PutMapping("/{id}")
+    public ResponseEntity<OffreResponse> updateOffre(@PathVariable Integer id, @Valid @RequestBody OffreRequest request, Authentication connectedUser) {
+        return ResponseEntity.ok(offreService.update(id, request, connectedUser));
+    }
 
 
 }

@@ -1,6 +1,8 @@
 package com.projetSpringBoot_Ng.projetSg_Ng.offres;
 
 import com.projetSpringBoot_Ng.projetSg_Ng.user.User;
+import com.projetSpringBoot_Ng.projetSg_Ng.postes.Poste;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -9,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,8 +29,8 @@ public class Offre {
     private String nomOffre;
     private String description;
 
-//    @OneToMany(mappedBy = "offre", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Poste> postes;
+    @OneToMany(mappedBy = "offre", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Poste> postes;
 
     @ManyToOne
     @JoinColumn(name = "recruteur_id")
