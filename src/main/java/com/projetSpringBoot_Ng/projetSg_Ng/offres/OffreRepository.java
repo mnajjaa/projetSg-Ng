@@ -9,4 +9,5 @@ public interface OffreRepository extends JpaRepository<Offre, Integer> {
 List<Offre> findAllById(Integer id);
 
 
+    List<Offre> findAllByRecruteurId(Integer recruteurId);
 }

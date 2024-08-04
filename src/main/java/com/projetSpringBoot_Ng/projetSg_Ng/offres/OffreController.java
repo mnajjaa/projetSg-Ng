@@ -21,6 +21,15 @@ public class OffreController {
     private final UserRepository userRepository;
 
 
+    @GetMapping
+    public ResponseEntity<List<OffreResponse>> getAllOffres() {
+        return ResponseEntity.ok(offreService.findAllOffres());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OffreResponse> getOffreById(@PathVariable Integer id) {
+        return ResponseEntity.ok(offreService.findById(id));
+    }
 
     @PostMapping
     public ResponseEntity<Integer> createOffre(@Valid @RequestBody OffreRequest request, Authentication connectedUser) {
@@ -35,6 +44,19 @@ public class OffreController {
     public ResponseEntity<OffreResponse> updateOffre(@PathVariable Integer id, @Valid @RequestBody OffreRequest request, Authentication connectedUser) {
         return ResponseEntity.ok(offreService.update(id, request, connectedUser));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOffre(@PathVariable Integer id) {
+        offreService.deleteOffre(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/recruter")
+    public ResponseEntity<List<OffreResponse>> getAllOffresByRecruter(Authentication connectedUser) {
+        return ResponseEntity.ok(offreService.findAllOffresByRecruter(connectedUser));
+    }
+
+
 
 
 }

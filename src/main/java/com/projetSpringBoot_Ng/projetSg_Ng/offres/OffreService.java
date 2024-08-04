@@ -56,9 +56,17 @@ public class OffreService {
                 .collect(Collectors.toList());
     }
 
+//    public List<OffreResponse> findAllOffresByRecruter(Authentication connectedUser) {
+//        User user = (User) connectedUser.getPrincipal();
+//        List<Offre> offres = offreRepository.findAllById(user.getId());
+//        return offres.stream()
+//                .map(offreMapper::toOffreResponse)
+//                .collect(Collectors.toList());
+//    }
+
     public List<OffreResponse> findAllOffresByRecruter(Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
-        List<Offre> offres = offreRepository.findAllById(user.getId());
+        List<Offre> offres = offreRepository.findAllByRecruteurId(user.getId());
         return offres.stream()
                 .map(offreMapper::toOffreResponse)
                 .collect(Collectors.toList());
@@ -78,5 +86,14 @@ public class OffreService {
 
         return offreMapper.toOffreResponse(existingOffre);
     }
+
+    public void deleteOffre(Integer id) {
+        Offre existingOffre = offreRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Offre not found"));
+        offreRepository.delete(existingOffre);
+    }
+
+
+
 
 }
