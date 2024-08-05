@@ -28,4 +28,8 @@ public class Poste {
     public int getNbrRecrutement() {
         return nbreRecrutement;
     }
+
+    public void setNbrRecrutement(Integer integer) {
+        this.nbreRecrutement = integer;
+    }
 }

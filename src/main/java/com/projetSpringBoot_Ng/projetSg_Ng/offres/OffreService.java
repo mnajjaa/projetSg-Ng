@@ -2,6 +2,7 @@ package com.projetSpringBoot_Ng.projetSg_Ng.offres;
 import com.projetSpringBoot_Ng.projetSg_Ng.postes.Poste;
 import com.projetSpringBoot_Ng.projetSg_Ng.postes.PosteMapper;
 import com.projetSpringBoot_Ng.projetSg_Ng.postes.PosteRepository;
+import com.projetSpringBoot_Ng.projetSg_Ng.postes.PosteRequest;
 import com.projetSpringBoot_Ng.projetSg_Ng.user.User;
 import com.projetSpringBoot_Ng.projetSg_Ng.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,8 +36,8 @@ public class OffreService {
         offre.setRecruteur(user);
         offreRepository.save(offre);
 
-        List<Poste> postes = posteMapper.toPostes(request.poste(), offre);
-        posteRepository.saveAll(postes);
+    //        List<Poste> postes = posteMapper.toPostes(request.poste(), offre);
+    //        posteRepository.saveAll(postes);
 
         return offre.getId();
     }
@@ -71,21 +73,22 @@ public class OffreService {
                 .map(offreMapper::toOffreResponse)
                 .collect(Collectors.toList());
     }
-        public OffreResponse update(Integer id, OffreRequest request, Authentication connectedUser) {
-        User user = ((User) connectedUser.getPrincipal());
-        Offre existingOffre = offreRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Offre not found"));
+
+    public OffreResponse updateOffre(Integer id, OffreRequest request, Authentication connectedUser) {
+        User user = (User) connectedUser.getPrincipal();
+        Offre existingOffre = offreRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Offre not found with id " + id));
 
         existingOffre.setNomOffre(request.nomOffre());
         existingOffre.setDescription(request.description());
         existingOffre.setLastModifiedBy(user.getId());
 
-        List<Poste> existingPostes = posteRepository.findByOffre(existingOffre);
-        posteRepository.deleteAll(existingPostes);
-        List<Poste> newPostes = posteMapper.toPostes(request.poste(), existingOffre);
-        posteRepository.saveAll(newPostes);
+        // Save the updated Offre
+        offreRepository.save(existingOffre);
 
         return offreMapper.toOffreResponse(existingOffre);
     }
+
 
     public void deleteOffre(Integer id) {
         Offre existingOffre = offreRepository.findById(id)

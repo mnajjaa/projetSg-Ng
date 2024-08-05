@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @Service
 public class OffreMapper {
     public Offre toOffre(OffreRequest request) {
-
         return Offre.builder()
                 .nomOffre(request.nomOffre())
                 .description(request.description())
@@ -42,7 +41,4 @@ public class OffreMapper {
                 .nbrRecrutement(totalNbrRecrutement)
                 .build();
     }
-
-
-
 }

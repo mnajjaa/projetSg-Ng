@@ -42,8 +42,9 @@ public class OffreController {
 
     @PutMapping("/{id}")
     public ResponseEntity<OffreResponse> updateOffre(@PathVariable Integer id, @Valid @RequestBody OffreRequest request, Authentication connectedUser) {
-        return ResponseEntity.ok(offreService.update(id, request, connectedUser));
+        return ResponseEntity.ok(offreService.updateOffre(id, request, connectedUser));
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOffre(@PathVariable Integer id) {

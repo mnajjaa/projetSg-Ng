@@ -9,4 +9,5 @@ public interface PosteRepository extends JpaRepository<Poste, Integer>{
     //re-check for pagination
     List<Poste> findByOffre(Offre offre);
 
+    List<Poste> findByOffreId(Integer offreId);
 }
