@@ -1,5 +1,6 @@
 package com.projetSpringBoot_Ng.projetSg_Ng.auth;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,4 +32,16 @@ public class RegistrationRequest {
     @NotNull(message = "Password is mandatory")
     @Size(min = 8, message = "Password should be 8 characters long minimum")
     private String password;
-}
+    @NotEmpty(message = "Role is mandatory")
+    @NotNull(message = "Role is mandatory")
+    private String role;
+    @Nullable
+    private String poste;
+    @Nullable
+    private String addresse;
+    @Nullable
+    private String ecole;
+    @Nullable
+    private String note;
+    @Nullable
+    private List<String> diplomes;}

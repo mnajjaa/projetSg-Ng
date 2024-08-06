@@ -1,5 +1,7 @@
 package com.projetSpringBoot_Ng.projetSg_Ng.auth;
 
+import com.projetSpringBoot_Ng.projetSg_Ng.diplome.Diplome;
+import com.projetSpringBoot_Ng.projetSg_Ng.diplome.DiplomeRepository;
 import com.projetSpringBoot_Ng.projetSg_Ng.email.EmailService;
 import com.projetSpringBoot_Ng.projetSg_Ng.email.EmailTemplateName;
 import com.projetSpringBoot_Ng.projetSg_Ng.role.RoleRepository;
@@ -34,24 +36,55 @@ public class AuthenticationService {
     private final RoleRepository roleRepository;
     private final EmailService emailService;
     private final TokenRepository tokenRepository;
+    private final DiplomeRepository diplomeRepository;
+
 
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
 
     public void register(RegistrationRequest request) throws MessagingException {
-        var userRole = roleRepository.findByName("USER")
-                // todo - better exception handling
-                .orElseThrow(() -> new IllegalStateException("ROLE USER was not initiated"));
-        var user = User.builder()
+        var roleName = request.getRole(); // Assuming role comes from the request
+        var role = roleRepository.findByName(roleName)
+                .orElseThrow(() -> new IllegalStateException("ROLE " + roleName + " was not initiated"));
+
+        // Build the user object
+        var userBuilder = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .accountLocked(false)
                 .enabled(false)
-                .roles(List.of(userRole))
-                .build();
+                .roles(List.of(role));
+
+        // Optional fields
+        if (request.getPoste() != null) {
+            userBuilder.poste(request.getPoste());
+        }
+        if (request.getAddresse() != null) {
+            userBuilder.addresse(request.getAddresse());
+        }
+        if (request.getEcole() != null) {
+            userBuilder.ecole(request.getEcole());
+        }
+        if (request.getNote() != null) {
+            userBuilder.note(request.getNote());
+        }
+
+        var user = userBuilder.build();
         userRepository.save(user);
+
+        // Save diplomas if present
+        if (request.getDiplomes() != null) {
+            request.getDiplomes().forEach(diplomeName -> {
+                var diplome = Diplome.builder()
+                        .diplome(diplomeName)
+                        .user(user)
+                        .build();
+                diplomeRepository.save(diplome);
+            });
+        }
+
         sendValidationEmail(user);
     }
 
