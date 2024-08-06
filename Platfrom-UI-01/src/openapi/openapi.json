@@ -6,11 +6,277 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8081/api/v1",
+      "url": "http://192.168.239.1:8081/api/v1",
       "description": "Generated server url"
     }
   ],
   "paths": {
+    "/postes/{id}": {
+      "get": {
+        "tags": [
+          "poste-controller"
+        ],
+        "operationId": "getPosteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PosteResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "poste-controller"
+        ],
+        "operationId": "updatePoste",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PosteResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "poste-controller"
+        ],
+        "operationId": "deletePoste",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/offres/{id}": {
+      "get": {
+        "tags": [
+          "Offres"
+        ],
+        "operationId": "getOffreById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Offres"
+        ],
+        "operationId": "updateOffre",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Offres"
+        ],
+        "operationId": "deleteOffre",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/postes": {
+      "post": {
+        "tags": [
+          "poste-controller"
+        ],
+        "operationId": "createPoste",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PosteResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/offres": {
+      "get": {
+        "tags": [
+          "Offres"
+        ],
+        "operationId": "getAllOffres",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OffreResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Offres"
+        ],
+        "operationId": "createOffre",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -71,6 +337,63 @@
         }
       }
     },
+    "/postes/offre/{offreId}": {
+      "get": {
+        "tags": [
+          "poste-controller"
+        ],
+        "operationId": "getPostesByOffre",
+        "parameters": [
+          {
+            "name": "offreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PosteResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/offres/recruter": {
+      "get": {
+        "tags": [
+          "Offres"
+        ],
+        "operationId": "getAllOffresByRecruter",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OffreResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/activate-account": {
       "get": {
         "tags": [
@@ -97,12 +420,107 @@
   },
   "components": {
     "schemas": {
+      "PosteRequest": {
+        "required": [
+          "formation",
+          "mission",
+          "technologies"
+        ],
+        "type": "object",
+        "properties": {
+          "technologies": {
+            "type": "string"
+          },
+          "formation": {
+            "type": "string"
+          },
+          "mission": {
+            "type": "string"
+          },
+          "nbreRecrutement": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "offreId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PosteResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "technologies": {
+            "type": "string"
+          },
+          "formation": {
+            "type": "string"
+          },
+          "mission": {
+            "type": "string"
+          },
+          "nbreRecrutement": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "offreId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "OffreRequest": {
+        "required": [
+          "description",
+          "nomOffre",
+          "poste"
+        ],
+        "type": "object",
+        "properties": {
+          "nomOffre": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "poste": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PosteRequest"
+            }
+          }
+        }
+      },
+      "OffreResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nomOffre": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "nbrRecrutement": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "RegistrationRequest": {
         "required": [
           "email",
           "firstname",
           "lastname",
-          "password"
+          "password",
+          "role"
         ],
         "type": "object",
         "properties": {
@@ -119,6 +537,27 @@
             "maxLength": 2147483647,
             "minLength": 8,
             "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "poste": {
+            "type": "string"
+          },
+          "addresse": {
+            "type": "string"
+          },
+          "ecole": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "diplomes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
