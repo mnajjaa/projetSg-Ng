@@ -9,13 +9,19 @@ import {FormsModule} from "@angular/forms";
 import { RegisterComponent } from './pages/register/register.component';
 import { ActivateAccountComponent } from './pages/activate-account/activate-account.component';
 import {CodeInputModule} from "angular-code-input";
+import { OffreComponent } from './pages/offre/offre.component';
+import { RoleComponent } from './pages/role/role.component';
+import { PosteComponent } from './pages/poste/poste.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    ActivateAccountComponent
+    ActivateAccountComponent,
+    OffreComponent,
+    RoleComponent,
+    PosteComponent
   ],
     imports: [
         BrowserModule,
