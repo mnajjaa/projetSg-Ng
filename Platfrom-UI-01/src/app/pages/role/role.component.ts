@@ -7,4 +7,20 @@ import { Component } from '@angular/core';
 })
 export class RoleComponent {
 
+  constructor() {
+    console.log('RoleComponent');
+
+  }
+
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+  }
+
+  ngOnChanges() {
+  }
+
+  ngDoCheck() {
+  }
 }
