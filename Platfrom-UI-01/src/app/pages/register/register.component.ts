@@ -9,15 +9,31 @@ import {RegistrationRequest} from '../../services/models/registration-request';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-
-  registerRequest: RegistrationRequest = {email: '', firstname: '', lastname: '', password: ''};
+  roles: string[] = ['USER', 'RECRUITER']; // Add available roles here
+  registerRequest: RegistrationRequest = {
+    email: '',
+    firstname: '',
+    lastname: '',
+    password: '',
+    role: ''
+  };
   errorMsg: Array<string> = [];
+  showSpecificFields: boolean = false;
 
   constructor(
     private router: Router,
     private authService: AuthenticationService
-  ) {
+  ) {}
+
+  onRoleChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement | null;
+    const selectedRole = selectElement?.value || '';
+    this.showSpecificFields = (selectedRole === 'USER' || selectedRole === 'RECRUITER');
+    this.registerRequest.role = selectedRole;
   }
+
+
+
 
   login() {
     this.router.navigate(['login']);
