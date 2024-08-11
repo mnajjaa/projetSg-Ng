@@ -12,6 +12,7 @@ import {CodeInputModule} from "angular-code-input";
 import { OffreComponent } from './pages/offre/offre.component';
 import { RoleComponent } from './pages/role/role.component';
 import { PosteComponent } from './pages/poste/poste.component';
+import { AccueilComponent } from './pages/accueil/accueil.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PosteComponent } from './pages/poste/poste.component';
     ActivateAccountComponent,
     OffreComponent,
     RoleComponent,
-    PosteComponent
+    PosteComponent,
+    AccueilComponent
   ],
     imports: [
         BrowserModule,

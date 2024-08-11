@@ -9,7 +9,7 @@ import {RegistrationRequest} from '../../services/models/registration-request';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  roles: string[] = ['USER', 'RECRUITER']; // Add available roles here
+  roles: string[] = ['USER', 'RECRUITER'];
   registerRequest: RegistrationRequest = {
     email: '',
     firstname: '',
