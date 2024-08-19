@@ -7,6 +7,10 @@ import java.util.List;
 public interface PosteRepository extends JpaRepository<Poste, Integer>{
 
     //re-check for pagination
+
+
+    List<Poste> findAll();
+
     List<Poste> findByOffre(Offre offre);
 
     List<Poste> findByOffreId(Integer offreId);

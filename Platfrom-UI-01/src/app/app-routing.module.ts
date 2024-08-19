@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'accueil',
     component: AccueilComponent
   },
+  {
+    path: 'offres',
+    loadChildren: () => import('./modules/offre/offre.module').then(m => m.OffreModule)
+  }
 
 ];
 

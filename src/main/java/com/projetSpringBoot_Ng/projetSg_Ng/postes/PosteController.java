@@ -14,6 +14,10 @@ import java.util.List;
 public class PosteController {
     private final PosteService posteService;
 
+    @GetMapping("/AllPostes")
+    public ResponseEntity<List<PosteResponse>> getAllPostes() {
+        return ResponseEntity.ok(posteService.findAllPostes());
+    }
     @GetMapping("/{id}")
     public ResponseEntity<PosteResponse> getPosteById(@PathVariable Integer id) {
         return ResponseEntity.ok(posteService.findById(id));

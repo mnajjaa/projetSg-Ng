@@ -20,6 +20,13 @@ public class PosteService {
     private final OffreRepository offreRepository;
     private final PosteMapper posteMapper;
 
+
+    public List<PosteResponse> findAllPostes() {
+        List<Poste> postes = posteRepository.findAll();
+        return postes.stream()
+                .map(posteMapper::toPosteResponse)
+                .collect(Collectors.toList());
+    }
     public PosteResponse findById(Integer id) {
         Poste poste = posteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Poste not found with id " + id));
