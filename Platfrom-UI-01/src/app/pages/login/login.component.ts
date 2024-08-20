@@ -29,7 +29,7 @@ export class LoginComponent {
       next: (res) => {
         // todo need to store/save the token in local storage
          this.tokenService.token = res.token as string;
-        this.router.navigate(['accueil']);
+        this.router.navigate(['offres']);
       },
       error: (err) => {
         console.log(err);

@@ -1,14 +1,14 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface RegistrationRequest {
+  addresse?: string;
+  diplomes?: Array<string>;
+  ecole?: string;
   email: string;
   firstname: string;
   lastname: string;
-  password: string;
-  role: string;
-  poste?: string;
-  addresse?: string;
-  ecole?: string;
   note?: string;
-  diplomes?: string[];
+  password: string;
+  poste?: string;
+  role: string;
 }

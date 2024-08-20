@@ -28,6 +28,11 @@ public class OffreService {
     private final PosteMapper posteMapper;
     private final PosteRepository posteRepository;
 
+    public String getOffreNameById(Integer offreId) {
+        Offre offre = offreRepository.findById(offreId)
+                .orElseThrow(() -> new EntityNotFoundException("Offre not found with id " + offreId));
+        return offre.getNomOffre();
+    }
 
     // check the github repo for refactor
     public Integer save(OffreRequest request, Authentication connectedUser) {
