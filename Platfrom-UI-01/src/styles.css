@@ -6,9 +6,15 @@
 @import "assets/vendor/css/pages/page-auth.css";
 @import "assets/vendor/css/pages/page-icons.css";
 @import "assets/vendor/css/pages/page-misc.css";
-@import "assets/vendor/css/theme-default.css";
+@import "assets/vendor/css/rtl/theme-default.css";
+@import "assets/vendor/css/rtl/core.css";
+
 
 @import "assets/vendor/libs/apex-charts/apex-charts.css";
-@import "assets/vendor/libs/highlight/highlight.css";
+/*@import "assets/vendor/libs/highlight/highlight.css";*!*/
 @import "assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
-
+@import "assets/vendor/fonts/boxicons.css";
+@import "assets/vendor/libs/@form-validation/umd/styles/index.min.css";
+@import "assets/vendor/libs/animate-css/animate.css";
+@import "assets/vendor/css/pages/app-academy-details.css";
+@import "assets/vendor/css/pages/app-academy.css";

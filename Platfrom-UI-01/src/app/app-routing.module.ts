@@ -17,7 +17,12 @@ const routes: Routes = [
   {
     path: 'activate-account',
     component: ActivateAccountComponent
+  },
+  {
+    path: 'offres',
+    loadChildren: () => import('./modules/offre/offre.module').then(m => m.OffreModule)
   }
+
 ];
 
 @NgModule({

@@ -124,6 +124,78 @@
               </div>
             </div>
 
+
+            <!-- Role Selection -->
+            <!-- Role Selection -->
+            <div class="mb-3">
+              <label for="role" class="form-label">Role</label>
+              <select
+                class="form-control"
+                id="role"
+                name="role"
+                (change)="onRoleChange($event)"
+                required
+              >
+                <option value="" disabled selected>Select your role</option>
+                <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+              </select>
+            </div>
+
+
+            <!-- Specific Fields Based on Role -->
+            <div *ngIf="showSpecificFields">
+              <!-- Poste Field (only for 'Recruteur') -->
+              <div class="mb-3" *ngIf="registerRequest.role === 'RECRUITER'">
+                <label for="poste" class="form-label">Poste</label>
+                <input
+                  [(ngModel)]="registerRequest.poste"
+                  type="text"
+                  class="form-control"
+                  id="poste"
+                  name="poste"
+                  placeholder="Enter your poste"
+                />
+              </div>
+
+              <!-- Address, School, and Note Fields (only for 'Candidat') -->
+              <div *ngIf="registerRequest.role === 'USER'">
+<!--                <div class="mb-3">-->
+<!--                  <label for="addresse" class="form-label">Address</label>-->
+<!--                  <input-->
+<!--                    [(ngModel)]="registerRequest.addresse"-->
+<!--                    type="text"-->
+<!--                    class="form-control"-->
+<!--                    id="addresse"-->
+<!--                    name="addresse"-->
+<!--                    placeholder="Enter your address"-->
+<!--                  />-->
+<!--                </div>-->
+<!--                <div class="mb-3">-->
+<!--                  <label for="ecole" class="form-label">School</label>-->
+<!--                  <input-->
+<!--                    [(ngModel)]="registerRequest.ecole"-->
+<!--                    type="text"-->
+<!--                    class="form-control"-->
+<!--                    id="ecole"-->
+<!--                    name="ecole"-->
+<!--                    placeholder="Enter your school"-->
+<!--                  />-->
+<!--                </div>-->
+<!--                <div class="mb-3">-->
+<!--                  <label for="note" class="form-label">Note</label>-->
+<!--                  <input-->
+<!--                    [(ngModel)]="registerRequest.note"-->
+<!--                    type="text"-->
+<!--                    class="form-control"-->
+<!--                    id="note"-->
+<!--                    name="note"-->
+<!--                    placeholder="Enter your note"-->
+<!--                  />-->
+<!--                </div>-->
+              </div>
+            </div>
+
+            <!-- Submit Button -->
             <button (click)="register()" class="btn btn-primary d-grid w-100">Sign up</button>
           </form>
 

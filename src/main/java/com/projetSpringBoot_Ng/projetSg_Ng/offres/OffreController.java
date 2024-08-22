@@ -58,6 +58,10 @@ public class OffreController {
     }
 
 
-
+    @GetMapping("/{id}/name")
+    public ResponseEntity<String> getOffreName(@PathVariable Integer id) {
+        String nomOffre = offreService.getOffreNameById(id);
+        return ResponseEntity.ok(nomOffre);
+    }
 
 }
